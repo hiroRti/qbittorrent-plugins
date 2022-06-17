@@ -14,7 +14,10 @@
 #  You should have received a copy of the GNU General Public License
 #  along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from html.parser import HTMLParser
+try:
+    from HTMLParser import HTMLParser
+except ImportError:
+    from html.parser import HTMLParser
 from helpers import retrieve_url
 from novaprinter import prettyPrinter
 
@@ -26,7 +29,10 @@ class dmhyorg(object):
 
     class DMHYHTMLParser(HTMLParser):
         def __init__(self,res,url):
-            super().__init__()
+            try:
+                super().__init__()
+            except:
+                HTMLParser.__init__(self)
             self.in_topic_list = False
             self.in_topic_body = False
             self.engine_url = url
