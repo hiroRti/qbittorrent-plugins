@@ -42,7 +42,7 @@ class dmhyorg(object):
             self.td_counter = -1
             self.span_counter = -1
 
-        def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        def handle_starttag(self, tag, attrs):
             attrs_dict = dict(attrs)
 
             if tag == 'table' and attrs_dict.get('id') == "topic_list":
@@ -54,7 +54,7 @@ class dmhyorg(object):
             if tag == "a" and self.in_topic_body:
                 self.start_a(attrs)
 
-        def start_a(self,attrs: list[tuple[str, str | None]]):
+        def start_a(self,attrs):
             params = dict(attrs)
             if params.get('href') and params['href'].startswith("/topics/view/"):
                 hit = {'desc_link': self.engine_url + params['href'], 'engine_url': self.engine_url}
@@ -77,7 +77,7 @@ class dmhyorg(object):
 
 
 
-        def handle_data(self, data: str) -> None:
+        def handle_data(self, data):
 
             if self.td_counter >=0 and self.td_counter < 6:
                 if self.td_counter == 0:
@@ -90,7 +90,7 @@ class dmhyorg(object):
                 if self.td_counter == 4:
                     self.curr['leech'] = int(data) if data.isdigit() else 0
 
-        def handle_endtag(self, tag: str) -> None:
+        def handle_endtag(self, tag):
             if tag == 'td':
                 self.end_td()
             if tag == "tbody":
