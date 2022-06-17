@@ -109,10 +109,10 @@ class dmhyorg(object):
         """
         page = 1
         while True:
-            url = f"{self.url}/topics/list/page/{page}?keyword={what}&sort_id={self.supported_categories[cat]}&order=date-desc"
+            search_url = f"{self.url}/topics/list/page/{page}?keyword={what}&sort_id={self.supported_categories[cat]}&order=date-desc"
             results = []
-            resp = retrieve_url(url)
-            parser = self.DMHYHTMLParser(results,url)
+            resp = retrieve_url(search_url)
+            parser = self.DMHYHTMLParser(results,self.url)
             parser.feed(resp)
             for res in results:
                 prettyPrinter(res)
